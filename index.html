@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<head></head>
+
+<body>
+
+<button id="start-button">Play Tone</button>
+<button id="stop-button">Stop Tone</button>
+
+<script>
+
+var audioCtx = new (AudioContext || webkitAudioContext)();
+var oscillator = audioCtx.createOscillator();
+
+var gain = audioCtx.createGain();
+gain.gain.value = 0.25;
+
+oscillator.type = 'sine';
+oscillator.frequency.value = 1000;
+
+oscillator.connect(gain);
+
+oscillator.start();
+
+document.getElementById('start-button').addEventListener('click', function() {
+  gain.connect(audioCtx.destination);
+});
+
+document.getElementById('stop-button').addEventListener('click', function() {
+  gain.disconnect(audioCtx.destination);
+});
+
+</script>
+
+</body>
